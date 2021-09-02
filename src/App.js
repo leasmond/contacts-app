@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import ContactList from "./components/ContactList/ContactList";
+import { Main } from "./wrapper/Main";
+import { getDataFromServer } from "./data";
+import "./App.css";
 
 function App() {
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [contacts, setContacts] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setContacts(await getDataFromServer());
+        setIsLoaded(true);
+      } catch (err) {
+        setError(err);
+      }
+    })();
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Main>
+        <Switch>
+          <Route path="/">
+            <ContactList
+              error={error}
+              isLoaded={isLoaded}
+              contacts={contacts}
+            />
+          </Route>
+          <Route></Route>
+          <Route></Route>
+          <Route></Route>
+        </Switch>
+      </Main>
+    </Router>
   );
 }
 
