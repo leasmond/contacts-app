@@ -1,7 +1,7 @@
 const Header = () => {
   return (
-    <div>
-      <p>Шапка</p>
+    <div className="header">
+      <p className="header__title">КНИГА КОНТАКТОВ</p>
     </div>
   );
 };

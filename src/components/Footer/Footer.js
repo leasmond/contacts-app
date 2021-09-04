@@ -1,7 +1,7 @@
-const Footer = () => {
+const Footer = ({ contactsCount }) => {
   return (
     <div>
-      <p>Итого: {100} контактов</p>
+      <p>Итого: {contactsCount} контактов</p>
     </div>
   );
 };

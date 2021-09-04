@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import ContactList from "./components/ContactList/ContactList";
+import { ContactList } from "./components/ContactList";
 import { Main } from "./wrapper/Main";
 import { getDataFromServer } from "./data";
 import "./App.css";
+import { ContactInfo } from "./components/ContactInfo";
 
 function App() {
   const [error, setError] = useState(null);
@@ -22,17 +23,19 @@ function App() {
   }, []);
   return (
     <Router>
-      <Main>
+      <Main contactsCount={contacts.length}>
         <Switch>
-          <Route path="/">
+          <Route exact path="/">
             <ContactList
               error={error}
               isLoaded={isLoaded}
               contacts={contacts}
             />
           </Route>
-          <Route></Route>
-          <Route></Route>
+          <Route path="/contact/edit"></Route>
+          <Route path="/contact/information">
+            <ContactInfo contacts={contacts} />
+          </Route>
           <Route></Route>
         </Switch>
       </Main>
